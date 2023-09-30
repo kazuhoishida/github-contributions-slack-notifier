@@ -1,4 +1,4 @@
-# GitHub Slack Connection
+# Github Contributions Slack Notifier
 
 This repository contains a zsh script that retrieves contributions data from the GitHub API and posts it to a Slack channel. The script can be run manually or automatically using a cron job.
 
