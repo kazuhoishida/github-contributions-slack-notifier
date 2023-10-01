@@ -44,7 +44,7 @@ crontab -e
 
 ```
 # for example, on every Monday 9:00
-0 9 * * 1 /usr/bin/zsh /path/to/github-slack-message.zsh
+0 9 * * 1 . ~/.zshrc; cd /path/to/directory && ./github-slack-message.zsh
 ```
 
 3. Save and close the crontab file.
