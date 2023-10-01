@@ -4,11 +4,11 @@ to_date=$(date -v-saturday -v-1w +"%Y-%m-%dT23:59:59Z")
 
 response=$(curl -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d '{"query":"query { user(login: \"'$GITHUB_USERNAME'\") { name contributionsCollection(from: \"'$from_date'\", to: \"'$to_date'\") { commitContributionsByRepository(maxRepositories: 100) { repository { name } contributions { totalCount } } contributionCalendar { totalContributions } } } }"}' https://api.github.com/graphql)
 
-total_contributions=$(echo $response | jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions')
+total_contributions=$(echo $response | /usr/local/bin/jq -r '.data.user.contributionsCollection.contributionCalendar.totalContributions')
 # count total commits num
-total_commits=$(echo $response | jq -r '.data.user.contributionsCollection.commitContributionsByRepository | map(.contributions.totalCount) | add // 0')
+total_commits=$(echo $response | /usr/local/bin/jq -r '.data.user.contributionsCollection.commitContributionsByRepository | map(.contributions.totalCount) | add // 0')
 # count total repositories num that I contributed
-total_repositories=$(echo $response | jq -r '.data.user.contributionsCollection.commitContributionsByRepository | length')
+total_repositories=$(echo $response | /usr/local/bin/jq -r '.data.user.contributionsCollection.commitContributionsByRepository | length')
 
 # slack message
 temp="*Last week's contributions:*\ntotal contributions: \`$total_contributions\`, commits: \`$total_commits\`, repositories: \`$total_repositories\`"
