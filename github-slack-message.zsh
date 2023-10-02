@@ -1,6 +1,6 @@
 # date range for last week
 from_date=$(date -v-sunday -v-1w +"%Y-%m-%dT00:00:00Z")
-to_date=$(date -v-saturday -v-1w +"%Y-%m-%dT23:59:59Z")
+to_date=$(date -v-saturday +"%Y-%m-%dT23:59:59Z")
 
 response=$(curl -H "Authorization: bearer $GITHUB_TOKEN" -X POST -d '{"query":"query { user(login: \"'$GITHUB_USERNAME'\") { name contributionsCollection(from: \"'$from_date'\", to: \"'$to_date'\") { commitContributionsByRepository(maxRepositories: 100) { repository { name } contributions { totalCount } } contributionCalendar { totalContributions } } } }"}' https://api.github.com/graphql)
 
